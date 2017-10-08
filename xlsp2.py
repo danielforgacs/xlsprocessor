@@ -41,21 +41,33 @@ class Label(Cell):
 class Area(Cell):
     pass
 
+def Row(object):
+    pass
+
+def  AreaRow(Row):
+    pass
+
+def ColourRow(Row):
+    pass
+
+
+
+
 def walk(table):
     for sheet in table.sheets():
         print 'sheet:', sheet.name
         for rowidx in range(sheet.nrows):
             print '\trow idx:', rowidx+1
             rawrow = sheet.row(rowidx)
-            newrow = ()
+            rowcells = ()
             for cellidx, rawcell in enumerate(rawrow):
                 # print '\t\tcell idx:', cellidx
                 cell = tokenizer(
                     value=str(rawcell.value),
                     idx=cellidx)
-                newrow = newrow + (cell,)
+                rowcells = rowcells + (cell,)
                 # print '\t\t cell:', cell
-            print
+            newrow = row_processor(cells=rowcells)
 
 
 def tokenizer(value, idx):
@@ -71,6 +83,10 @@ def tokenizer(value, idx):
         token = Area
         value = value
     return token(value=value, idx=idx)
+
+
+def row_processor(cells):
+    pass
 
 
 
