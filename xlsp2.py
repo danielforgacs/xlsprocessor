@@ -47,6 +47,7 @@ class Row(object):
     def __init__(self, cells, idx):
         self.cells =cells
         self.idx = idx
+        self.namebased = False
     def __str__(self):
         return ('Row: {idx}. type: {typ} valid:'
             ' {vld},\n\t{cels}\n').format(
@@ -55,6 +56,10 @@ class Row(object):
             vld=bool(self),
             cels='\n\t'.join([str(cell) for
                 cell in self.cells]))
+    def __nonzero__(self):
+        if not self.cells:
+            return False
+        return True
 
 class AreaRow(Row):
     pass
@@ -67,6 +72,7 @@ class ColourRow(Row):
 
 def walk(table):
     for sheet in table.sheets():
+        rows = ()
         # print 'sheet:', sheet.name
         for rowidx in range(sheet.nrows):
             # print '\trow idx:', rowidx+1
@@ -81,7 +87,10 @@ def walk(table):
                 # print '\t\t cell:', cell
             newrow = row_processor(
                 cells=rowcells, idx=rowidx)
-            print newrow
+            if newrow:
+                rows = rows + (newrow,)
+        for row in rows:
+            print row
 
 
 def tokenizer(value, idx):
