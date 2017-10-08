@@ -9,30 +9,28 @@ COLOUR_DB = tuple(['colour '+str(k) for
 
 class Cell(object):
     def __init__(self, cellvalue, idx):
+        # print ':cellinit:', cellvalue, bool(cellvalue), type(self).__name__
         self.value = cellvalue
         self.idx = idx
     def __str__(self):
-        objstr = super(Cell, self).__str__()
-        return '<"{0:<8}":{1:<10}: {2}>'.format(
-            str(self.value), type(self).__name__,
-            self.idx)
+        # objstr = super(Cell, self).__str__()
+        # return '<"{0:<8}":{1:<10}: {2} {3}>'.format(
+        #     str(self.value), type(self).__name__,
+        #     self.idx, bool(self))
+        return str(bool(self))
     def __nonzero__(self):
-        result = 'N/A'
-        is_first = self.idx == 0
-        is_empty = bool(self.value)
-        if is_first and is_empty:
-            result = False
+        if self.idx == 0:
+            return False
         else:
-            result = True
-        # print result, self.idx, type(self.value), self.value
-        return result
+            return True
 
 class NameLabel(Cell):
     def __nonzero__(self):
         return bool(self.idx==0)
 
 class CodeLabel(Cell):
-    pass
+    def __nonzero__(self):
+        return bool(self.idx==1)
 
 class Name(Cell):
     pass
@@ -41,10 +39,12 @@ class Code(Cell):
     pass
 
 class Area(Cell):
-    pass
+    def __nonzero__(self):
+        return True
 
 class Colour(Cell):
-    pass
+    def __nonzero__(self):
+        return True
 
 
 class XLS(object):
@@ -84,14 +84,18 @@ class Row(object):
         self.idx = idx
         self.cells = ()
         for idx, rawcell in enumerate(row):
-            newcell = class_selector(
+            newcell = cell_selector(
                 cellvalue=str(rawcell.value),
                 cellidx=idx)
             # print bool(newcell), newcell.value
             self.cells = self.cells+(newcell,)
     def __str__(self):
-        return '<{}:{}: {}>'.format(
-            'Row', self.idx, all(self.cells))
+        # print 'cells:', [bool(cellx) for cellx in self.cells]
+        # return '<{}:{}: {}>'.format(
+        #     'Row', self.idx, all(self.cells))
+        # return str(all(self.cells))
+        return str(all(self.cells))
+        # return str([bool(c) for c in self.cells])
     def __nonzero__(self):
         # return all(self.cells)
         # return bool(self.cells)
@@ -99,12 +103,12 @@ class Row(object):
     def __iter__(self):
         return iter(self.cells)
 
-def class_selector(cellvalue, cellidx):
-    print bool(cellvalue), cellidx, cellvalue,
-    cellclass = None
-    value = None
+def cell_selector(cellvalue, cellidx):
+    # print bool(cellvalue), cellidx, cellvalue,
+    # cellclass = None
     if not cellvalue:
         cellclass = Cell
+        value = None
     elif cellvalue == NAMELABEL:
         cellclass = NameLabel
         value = NAMELABEL
@@ -122,7 +126,7 @@ def class_selector(cellvalue, cellidx):
             cellvalue=value,
             idx=cellidx,)
 
-    print type(cell).__name__
+    # print cellvalue, type(cellvalue), bool(cellvalue)
     return cell
 
 
@@ -136,6 +140,6 @@ if __name__ == '__main__':
             print '\t', row, '\n\t\t',
             for cell in row:
                 pass
-                # print cell,
-            # print
+                print cell,
+            print
             # print
