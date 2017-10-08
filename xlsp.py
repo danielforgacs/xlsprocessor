@@ -88,7 +88,7 @@ class Row(object):
             self.cells = self.cells+(newcell,)
     def __str__(self):
         return '<{}:{}: {}>'.format(
-            'Row', self.idx, all(self.cells))
+            'Row', self.idx+1, all(self.cells))
     def __nonzero__(self):
         return all(self.cells)
     def __iter__(self):
