@@ -17,7 +17,15 @@ class Cell(object):
             str(self.value), type(self).__name__,
             self.idx)
     def __nonzero__(self):
-        return bool(self.value)
+        result = 'N/A'
+        is_first = self.idx == 0
+        is_empty = bool(self.value)
+        if is_first and is_empty:
+            result = False
+        else:
+            result = True
+        # print result, self.idx, type(self.value), self.value
+        return result
 
 class NameLabel(Cell):
     def __nonzero__(self):
@@ -79,10 +87,11 @@ class Row(object):
             newcell = class_selector(
                 cellvalue=str(rawcell.value),
                 cellidx=idx)
+            # print bool(newcell), newcell.value
             self.cells = self.cells+(newcell,)
     def __str__(self):
-        return '<{}:{}: {}>'.format('Row', self.idx,
-            all(self.cells))
+        return '<{}:{}: {}>'.format(
+            'Row', self.idx, all(self.cells))
     def __nonzero__(self):
         # return all(self.cells)
         # return bool(self.cells)
@@ -91,9 +100,10 @@ class Row(object):
         return iter(self.cells)
 
 def class_selector(cellvalue, cellidx):
+    print bool(cellvalue), type(cellvalue), cellidx, cellvalue
     if not cellvalue:
         return Cell(
-            cellvalue=False,
+            cellvalue=None,
             idx=cellidx,)
     elif cellvalue == NAMELABEL:
         return NameLabel(
@@ -116,10 +126,13 @@ def class_selector(cellvalue, cellidx):
 if __name__ == '__main__':
     table = XLS(xlsfile=XLS_TEST)
     for sheet in table:
-        print sheet
+        pass
+        # print sheet
         for row in sheet.rows:
-            print '\t', row, '\n\t\t',
+            pass
+            # print '\t', row, '\n\t\t',
             for cell in row:
+                pass
                 print cell,
-            print
-            print
+            # print
+            # print
