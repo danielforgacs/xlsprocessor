@@ -13,7 +13,7 @@ class Cell(object):
     def __init__(self, value, idx):
         self.value = value
         self.idx = idx
-        print '\t\t', self
+        # print '\t\t', self
     def __str__(self):
         return ('<{val:<8}.{idx:>2} .'
             '{boo:<6}.{typ}>').format(
@@ -41,25 +41,35 @@ class Label(Cell):
 class Area(Cell):
     pass
 
-def Row(object):
+
+
+class Row(object):
     def __init__(self, cells, idx):
         self.cells =cells
         self.idx = idx
+    def __str__(self):
+        return ('Row: {idx}. type: {typ} valid:'
+            ' {vld},\n\t{cels}\n').format(
+            idx=self.idx+1,
+            typ=self.__class__.__name__,
+            vld=bool(self),
+            cels='\n\t'.join([str(cell) for
+                cell in self.cells]))
 
-def AreaRow(Row):
-    pass
+# def AreaRow(Row):
+#     pass
 
-def ColourRow(Row):
-    pass
+# def ColourRow(Row):
+#     pass
 
 
 
 
 def walk(table):
     for sheet in table.sheets():
-        print 'sheet:', sheet.name
+        # print 'sheet:', sheet.name
         for rowidx in range(sheet.nrows):
-            print '\trow idx:', rowidx+1
+            # print '\trow idx:', rowidx+1
             rawrow = sheet.row(rowidx)
             rowcells = ()
             for cellidx, rawcell in enumerate(rawrow):
@@ -71,6 +81,7 @@ def walk(table):
                 # print '\t\t cell:', cell
             newrow = row_processor(
                 cells=rowcells, idx=rowidx)
+            print newrow
 
 
 def tokenizer(value, idx):
@@ -89,7 +100,7 @@ def tokenizer(value, idx):
 
 
 def row_processor(cells, idx):
-    if isinstace()
+    return Row(cells=cells, idx=idx)
 
 
 
