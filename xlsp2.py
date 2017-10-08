@@ -42,9 +42,11 @@ class Area(Cell):
     pass
 
 def Row(object):
-    pass
+    def __init__(self, cells, idx):
+        self.cells =cells
+        self.idx = idx
 
-def  AreaRow(Row):
+def AreaRow(Row):
     pass
 
 def ColourRow(Row):
@@ -67,7 +69,8 @@ def walk(table):
                     idx=cellidx)
                 rowcells = rowcells + (cell,)
                 # print '\t\t cell:', cell
-            newrow = row_processor(cells=rowcells)
+            newrow = row_processor(
+                cells=rowcells, idx=rowidx)
 
 
 def tokenizer(value, idx):
@@ -85,8 +88,8 @@ def tokenizer(value, idx):
     return token(value=value, idx=idx)
 
 
-def row_processor(cells):
-    pass
+def row_processor(cells, idx):
+    if isinstace()
 
 
 
