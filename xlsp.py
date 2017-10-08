@@ -100,39 +100,42 @@ class Row(object):
         return iter(self.cells)
 
 def class_selector(cellvalue, cellidx):
-    print bool(cellvalue), type(cellvalue), cellidx, cellvalue
+    print bool(cellvalue), cellidx, cellvalue,
+    cellclass = None
+    value = None
     if not cellvalue:
-        return Cell(
-            cellvalue=None,
-            idx=cellidx,)
+        cellclass = Cell
     elif cellvalue == NAMELABEL:
-        return NameLabel(
-            cellvalue=NAMELABEL,
-            idx=cellidx,)
+        cellclass = NameLabel
+        value = NAMELABEL
     elif cellvalue == CODELABEL:
-        return CodeLabel(
-            cellvalue=CODELABEL,
-            idx=cellidx,)
+        cellclass = CodeLabel
+        value = CODELABEL
     elif cellvalue in AREAS:
-        return Area(
-            cellvalue=cellvalue,
-            idx=cellidx,)
+        cellclass = Area
+        value = cellvalue
     else:
-        return Colour(
-            cellvalue=cellvalue,
+        cellclass = Colour
+        value = cellvalue
+
+    cell = cellclass(
+            cellvalue=value,
             idx=cellidx,)
+
+    print type(cell).__name__
+    return cell
 
 
 if __name__ == '__main__':
     table = XLS(xlsfile=XLS_TEST)
     for sheet in table:
         pass
-        # print sheet
+        print sheet
         for row in sheet.rows:
             pass
-            # print '\t', row, '\n\t\t',
+            print '\t', row, '\n\t\t',
             for cell in row:
                 pass
-                print cell,
+                # print cell,
             # print
             # print
