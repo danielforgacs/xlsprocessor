@@ -70,6 +70,7 @@ class Sheet(object):
         for rowidx in range(sheet.nrows):
             newrow = Row(row=sheet.row(rowidx),
                 idx=rowidx)
+            print [c.value for c in newrow.cells]
             if newrow:
                 self.rows = self.rows + (newrow,)
     def __str__(self):
