@@ -8,9 +8,10 @@ COLOUR_DB = tuple(['colour '+str(k) for
                     k in range(5)])
 
 class Cell(object):
-    def __init__(self, value, idx):
+    def __init__(self, value, idx, prevcell):
         self.value = value
         self.idx = idx
+        self.prevcell = prevcell
     def __str__(self):
         objstr = super(Cell, self).__str__()
         return '<{0:<7}:{1:<5}: {2}>'.format(
@@ -25,9 +26,14 @@ class Label(Cell):
         if self.value == NAMELABEL:
             if self.idx != 0:
                 isgood = False
-        if self.value == CODELABEL:
+        elif self.value == CODELABEL:
             if self.idx != 1:
                 isgood = False
+            if not self.prevcell:
+                isgood = False
+            else:
+                if self.prevcell.value != NAMELABEL:
+                    isgood = False
         return isgood
 
 
@@ -82,10 +88,12 @@ class Row(object):
     def __init__(self, row, idx):
         self.idx = idx
         self.cells = ()
-        self.varbased = True
+        prevcell = None
         for idx, rawcell in enumerate(row):
             cell = class_selector(
-                cell=rawcell, cellidx=idx)
+                cell=rawcell,
+                cellidx=idx,
+                prevcell=prevcell)
             if cell:
                 self.cells = self.cells+(
                         cell,)
@@ -96,18 +104,33 @@ class Row(object):
     def __iter__(self):
         return iter(self.cells)
 
-def class_selector(cell, cellidx):
+def class_selector(cell, cellidx, prevcell):
     value = str(cell.value)
     if not value:
-        return Cell(value=False, idx=cellidx)
+        return Cell(
+            value=False,
+            idx=cellidx,
+            prevcell=prevcell)
     elif value == NAMELABEL:
-        return Label(value=NAMELABEL, idx=cellidx)
+        return Label(
+            value=NAMELABEL,
+            idx=cellidx,
+            prevcell=prevcell)
     elif value == CODELABEL:
-        return Label(value=CODELABEL, idx=cellidx)
+        return Label(
+            value=CODELABEL,
+            idx=cellidx,
+            prevcell=prevcell)
     elif value in AREAS:
-        return Area(value=value, idx=cellidx)
+        return Area(
+            value=value,
+            idx=cellidx,
+            prevcell=prevcell)
     else:
-        return Colour(value=value, idx=cellidx)
+        return Colour(
+            value=value,
+            idx=cellidx,
+            prevcell=prevcell)
 
 
 if __name__ == '__main__':
