@@ -65,17 +65,28 @@ class Sheet(object):
         self.name = sheet.name
         self.maxcoords = sheet.nrows, sheet.ncols
         self.rows = ()
+        self.is_namebased = False
+        self.has_areas = False
         for rowidx in range(sheet.nrows):
             newrow = Row(row=sheet.row(rowidx),
                 idx=rowidx)
             if newrow:
+                # self.is_namebased = isinstance(newrow[0], NameLabel)
+                # if self.is_namebased:
+                #     if not isinstance(newrow[1], CodeLabel):
+                #         break
+
                 self.rows = self.rows + (newrow,)
     def __str__(self):
-        return '<{}:{}:rows {}: cols: {}>'.format(
+        return ('<{}:{}:rows {}: cols: {}: namebased: {}:'
+            ' has areas: {}: valid: {}>').format(
             'sheet', self.name, self.maxcoords[0],
-            self.maxcoords[1], )
+            self.maxcoords[1], self.is_namebased,
+            str(self.has_areas), all(self.rows))
     def __nonzero__(self):
-        return bool(self.rows)
+        # if not self.has_areas:
+        #     return False
+        return all(self.rows)
 
 class Row(object):
     def __init__(self, row, idx):
@@ -93,6 +104,10 @@ class Row(object):
         return all(self.cells)
     def __iter__(self):
         return iter(self.cells)
+    def __getitem__(self, idx):
+        return self.cells[idx]
+    def __len__(self):
+        return len(self.cells)
 
 def cell_selector(cellvalue, cellidx):
     if not cellvalue:
