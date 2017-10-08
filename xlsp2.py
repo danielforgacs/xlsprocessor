@@ -13,12 +13,13 @@ class Cell(object):
     def __init__(self, value, idx):
         self.value = value
         self.idx = idx
-        print self
+        print '\t\t', self
     def __str__(self):
-        return '<{val}:{idx}:{boo}:{typ}>'.format(
+        return ('<{val:<8}.{idx:>2} .'
+            '{boo:<6}.{typ}>').format(
             val=self.value,
             idx=self.idx+1,
-            boo=bool(self),
+            boo=str(bool(self)),
             typ=type(self).__name__)
 
 class Empty(Cell):
@@ -42,16 +43,19 @@ class Area(Cell):
 
 def walk(table):
     for sheet in table.sheets():
-        # print sheet.name
+        print 'sheet:', sheet.name
         for rowidx in range(sheet.nrows):
+            print '\trow idx:', rowidx+1
             rawrow = sheet.row(rowidx)
             newrow = ()
-            # print 'row index:', rowidx+1
             for cellidx, rawcell in enumerate(rawrow):
+                # print '\t\tcell idx:', cellidx
                 cell = tokenizer(
-                    value=rawcell.value,
+                    value=str(rawcell.value),
                     idx=cellidx)
                 newrow = newrow + (cell,)
+                # print '\t\t cell:', cell
+            print
 
 
 def tokenizer(value, idx):
