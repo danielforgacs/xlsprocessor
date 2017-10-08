@@ -9,15 +9,13 @@ COLOUR_DB = tuple(['colour '+str(k) for
 
 class Cell(object):
     def __init__(self, cellvalue, idx):
-        # print ':cellinit:', cellvalue, bool(cellvalue), type(self).__name__
         self.value = cellvalue
         self.idx = idx
     def __str__(self):
-        # objstr = super(Cell, self).__str__()
-        # return '<"{0:<8}":{1:<10}: {2} {3}>'.format(
-        #     str(self.value), type(self).__name__,
-        #     self.idx, bool(self))
-        return str(bool(self))
+        objstr = super(Cell, self).__str__()
+        return '<"{0:<8}":{1:<10}: {2} {3}>'.format(
+            str(self.value), type(self).__name__,
+            self.idx, bool(self))
     def __nonzero__(self):
         if self.idx == 0:
             return False
@@ -70,7 +68,6 @@ class Sheet(object):
         for rowidx in range(sheet.nrows):
             newrow = Row(row=sheet.row(rowidx),
                 idx=rowidx)
-            print [c.value for c in newrow.cells]
             if newrow:
                 self.rows = self.rows + (newrow,)
     def __str__(self):
@@ -88,25 +85,16 @@ class Row(object):
             newcell = cell_selector(
                 cellvalue=str(rawcell.value),
                 cellidx=idx)
-            # print bool(newcell), newcell.value
             self.cells = self.cells+(newcell,)
     def __str__(self):
-        # print 'cells:', [bool(cellx) for cellx in self.cells]
-        # return '<{}:{}: {}>'.format(
-        #     'Row', self.idx, all(self.cells))
-        # return str(all(self.cells))
-        return str(all(self.cells))
-        # return str([bool(c) for c in self.cells])
+        return '<{}:{}: {}>'.format(
+            'Row', self.idx, all(self.cells))
     def __nonzero__(self):
-        # return all(self.cells)
-        # return bool(self.cells)
-        return True
+        return all(self.cells)
     def __iter__(self):
         return iter(self.cells)
 
 def cell_selector(cellvalue, cellidx):
-    # print bool(cellvalue), cellidx, cellvalue,
-    # cellclass = None
     if not cellvalue:
         cellclass = Cell
         value = None
@@ -127,7 +115,6 @@ def cell_selector(cellvalue, cellidx):
             cellvalue=value,
             idx=cellidx,)
 
-    # print cellvalue, type(cellvalue), bool(cellvalue)
     return cell
 
 
@@ -143,4 +130,3 @@ if __name__ == '__main__':
                 pass
                 print cell,
             print
-            # print
