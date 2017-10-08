@@ -56,11 +56,11 @@ class Row(object):
             cels='\n\t'.join([str(cell) for
                 cell in self.cells]))
 
-# def AreaRow(Row):
-#     pass
+class AreaRow(Row):
+    pass
 
-# def ColourRow(Row):
-#     pass
+class ColourRow(Row):
+    pass
 
 
 
@@ -100,10 +100,8 @@ def tokenizer(value, idx):
 
 
 def row_processor(cells, idx):
-    return Row(cells=cells, idx=idx)
-
-
-
+    if isinstance(cells[0], Label):
+        return AreaRow(cells=cells, idx=idx)
 
 
 table = walk(table=table)
