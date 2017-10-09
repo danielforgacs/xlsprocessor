@@ -29,14 +29,20 @@ class Empty(Cell):
         else:
             return True
 
-class Label(Cell):
-    def __nonzero__(self):
-        if self.idx == 0:
-            return self.value == NAMELABEL
-        elif self.idx == 1:
-            return self.value == CODELABEL
-        else:
-            return False
+# class Label(Cell):
+#     def __nonzero__(self):
+#         if self.idx == 0:
+#             return self.value == NAMELABEL
+#         elif self.idx == 1:
+#             return self.value == CODELABEL
+#         else:
+#             return False
+
+class NameLabel(Cell):
+    pass
+
+class CodeLabel(Cell):
+    pass
 
 class Area(Cell):
     pass
@@ -47,7 +53,7 @@ class Row(object):
     def __init__(self, cells, idx):
         self.cells =cells
         self.idx = idx
-        self.namebased = False
+        # self.namebased = False
     def __str__(self):
         return ('Row: {idx}. type: {typ} valid:'
             ' {vld},\n\t{cels}\n').format(
@@ -58,6 +64,19 @@ class Row(object):
                 cell in self.cells]))
     def __nonzero__(self):
         if not self.cells:
+            return False
+        return True
+
+
+class LabelRow(Row):
+    def __nonzero__(self):
+        if not isinstance(
+            self.cells[1], (CodeLabel, Empty)):
+            return False
+        elif not all(
+            map(
+                lambda x: isinstance(x, Area),
+                 self.cells[2:])):
             return False
         return True
 
@@ -97,10 +116,10 @@ def tokenizer(value, idx):
     if not value:
         token = Empty
     elif value == NAMELABEL:
-        token = Label
+        token = NameLabel
         value = NAMELABEL
     elif value == CODELABEL:
-        token = Label
+        token = CodeLabel
         value = CODELABEL
     elif value in AREAS:
         token = Area
@@ -109,8 +128,14 @@ def tokenizer(value, idx):
 
 
 def row_processor(cells, idx):
-    if isinstance(cells[0], Label):
-        return AreaRow(cells=cells, idx=idx)
+    if isinstance(cells[0], NameLabel):
+        rowclass = LabelRow
+    elif isinstance(cells[0], Area):
+        rowclass = AreaRow
+    else:
+        rowclass = ColourRow
+    return rowclass(cells=cells, idx=idx)
+
 
 
 table = walk(table=table)
