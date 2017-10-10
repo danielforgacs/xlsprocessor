@@ -66,6 +66,12 @@ class EmptyRow(Row):
     def __nonzero__(self):
         return False
 
+# ROWPATTERNS
+# ROWPATTERNS
+# ROWPATTERNS
+# ROWPATTERNS
+
+
 class AreaRow(Row):
     pass
 
