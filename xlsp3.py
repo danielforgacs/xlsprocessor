@@ -38,8 +38,6 @@ class CellRow(object):
         return cellclass(value=value, idx=idx)
     def __str__(self):
         return ', '.join([str(cell) for cell in self.cells])
-        # cells = ', '.join([str(cell) for cell in self.cells])
-        # return '<{}: {}>'.format(bool(self), cells)
 
 class Row(object):
     pass
