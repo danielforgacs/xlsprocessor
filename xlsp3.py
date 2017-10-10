@@ -48,7 +48,7 @@ class Empty(Cell):
     pass
 
 class NameLabel(Cell):
-    def __nonzer__(self):
+    def __nonzero__(self):
         return self.idx == 0
 
 class CodeLabel(Cell):
