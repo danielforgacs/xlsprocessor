@@ -27,7 +27,7 @@ class Sheet(object):
             return cellrow
         return rowclass(cellrow.cells, cellrow.idx)
     def __str__(self):
-        return ''.join(['\n\trow: {:<2} {:<6} {:<11} {}'.format(
+        return ''.join(['\n\t{:<2} {:<6} {:<11} {}'.format(
             str(row.idx), str(bool(row)), str(type(row).__name__),
             str(row)) for row in self.rows])
         return ''.join(['\n\trow: '+str(row.idx)+' '+str(bool(row))+' '+str(type(row).__name__)
@@ -77,8 +77,9 @@ class Cell(object):
         self.value = value
         self.idx = idx
     def __str__(self):
-        return '<{:<1} {:<7} {:<5} {:<10}>'.format(
-            str(self.idx), self.value, str(bool(self)), self.__class__.__name__)
+        return '<{:<7} {:<2} {:<10}>'.format(
+            self.value, 'ok' if bool(self) else '.',
+            self.__class__.__name__)
 
 class Empty(Cell):
     pass
