@@ -14,13 +14,14 @@ class Table(object):
 
 class Sheet(object):
     def __init__(self, sheet):
-        self.rows = tuple(Row(row) for row in sheet)
+        cellrows = tuple(CellRow(row) for row in sheet)
+        self.rows = tuple(self.row_selector(row) for row in cellrows)
     def __str__(self):
         return '\n'.join([str(row) for row in self.rows])+'\n'
-    def row_selector(cellrow):
-        pass
+    def row_selector(self, cellrow):
+        return cellrow
 
-class Row(object):
+class CellRow(object):
     def __init__(self, row):
         self.cells = tuple(self.cell_selector(cell, idx)
                         for idx, cell in enumerate(row))
@@ -37,6 +38,15 @@ class Row(object):
         elif value in AREAS:
             cellclass = AreaCell
         return cellclass(value=value, idx=idx)
+
+class Row(object):
+    pass
+
+class EmptyRow(Row):
+    pass
+
+class AreaRow(Row):
+    pass
 
 class Cell(object):
     def __init__(self, value, idx):
