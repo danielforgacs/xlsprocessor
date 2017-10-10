@@ -4,7 +4,6 @@ from pprint import pprint
 NAMELABEL = 'name'
 CODELABEL = 'code'
 AREAS = ['area '+str(k) for k in range(5)]
-COLOURS = ['colour '+str(k) for k in range(5)]
 
 
 class Table(object):
