@@ -16,7 +16,7 @@ class Sheet(object):
         self.rows = tuple(Row(row) for row in sheet)
         print self
     def __str__(self):
-        return '\n'.join([str(row) for row in self.rows])
+        return '\n'.join([str(row) for row in self.rows])+'\n'
 
 class Row(object):
     def __init__(self, row):
@@ -52,7 +52,8 @@ class NameLabel(Cell):
         return self.idx == 0
 
 class CodeLabel(Cell):
-    pass
+    def __nonzero__(self):
+        return self.idx == 1
 
 class AreaCell(Cell):
     pass
