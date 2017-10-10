@@ -14,15 +14,16 @@ class Table(object):
 
 class Sheet(object):
     def __init__(self, sheet):
-        cellrows = tuple(CellRow(row) for row in sheet)
+        cellrows = tuple(CellRow(row, idx) for idx, row in enumerate(sheet))
         self.rows = tuple(self.row_selector(cellrow=row) for row in cellrows)
     def row_selector(self, cellrow):
         return cellrow
     def __str__(self):
-        return ''.join(['\n\trow: '+str(row) for row in self.rows])
+        return ''.join(['\n\trow: '+str(row.idx)+str(row) for row in self.rows])
 
 class CellRow(object):
-    def __init__(self, row):
+    def __init__(self, row, idx):
+        self.idx = idx
         self.cells = tuple(self.cell_selector(cell, idx)
                         for idx, cell in enumerate(row))
     def cell_selector(self, value, idx):
