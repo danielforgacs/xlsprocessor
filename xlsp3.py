@@ -17,9 +17,18 @@ class Sheet(object):
         cellrows = tuple(CellRow(row, idx) for idx, row in enumerate(sheet))
         self.rows = tuple(self.row_selector(cellrow=row) for row in cellrows)
     def row_selector(self, cellrow):
-        return cellrow
+        if all([isinstance(cell, Empty) for cell in cellrow]):
+            rowclass = EmptyRow
+        if isinstance(cellrow[0], NameLabel):
+            rowclass = NameAreaRow
+        else:
+            return cellrow
+        return rowclass(cellrow.cells, cellrow.idx)
     def __str__(self):
-        return ''.join(['\n\trow: '+str(row.idx)+' '+str(bool(row))
+        return ''.join(['\n\trow: {:<2} {:<6} {:<11} {}'.format(
+            str(row.idx), str(bool(row)), str(type(row).__name__),
+            str(row)) for row in self.rows])
+        return ''.join(['\n\trow: '+str(row.idx)+' '+str(bool(row))+' '+str(type(row).__name__)
             +' '+str(row) for row in self.rows])
 
 class CellRow(object):
@@ -39,14 +48,26 @@ class CellRow(object):
         return cellclass(value=value, idx=idx)
     def __str__(self):
         return ', '.join([str(cell) for cell in self.cells])
+    def __iter__(self):
+        return iter(self.cells)
+    def __getitem__(self, idx):
+        return self.cells[idx]
 
 class Row(object):
-    pass
+    def __init__(self, cells, idx):
+        self.cells = cells
+        self.idx = idx
+    def __str__(self):
+        return ', '.join([str(cell) for cell in self.cells])
 
 class EmptyRow(Row):
-    pass
+    def __nonzero__(self):
+        return False
 
 class AreaRow(Row):
+    pass
+
+class NameAreaRow(Row):
     pass
 
 class Cell(object):
