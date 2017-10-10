@@ -19,7 +19,9 @@ class Sheet(object):
     def row_selector(self, cellrow):
         if all([isinstance(cell, Empty) for cell in cellrow]):
             rowclass = EmptyRow
-        if isinstance(cellrow[0], NameLabel):
+        elif not all(cellrow):
+            rowclass = EmptyRow
+        elif isinstance(cellrow[0], NameLabel):
             rowclass = NameAreaRow
         else:
             return cellrow
