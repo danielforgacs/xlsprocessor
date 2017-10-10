@@ -9,13 +9,16 @@ AREAS = ['area '+str(k) for k in range(5)]
 class Table(object):
     def __init__(self, xls):
         self.sheets = tuple(Sheet(sheet) for sheet in xls)
+    def __str__(self):
+        return '\n'.join([str(sheet) for sheet in self.sheets])
 
 class Sheet(object):
     def __init__(self, sheet):
         self.rows = tuple(Row(row) for row in sheet)
-        print self
     def __str__(self):
         return '\n'.join([str(row) for row in self.rows])+'\n'
+    def row_selector(cellrow):
+        pass
 
 class Row(object):
     def __init__(self, row):
@@ -40,8 +43,7 @@ class Cell(object):
         self.value = value
         self.idx = idx
     def __str__(self):
-        return '<{}. {}>'.format(
-            self.value, bool(self))
+        return '<{}. {}>'.format(self.value, bool(self))
 
 class Empty(Cell):
     pass
@@ -58,8 +60,6 @@ class AreaCell(Cell):
     pass
 
 
-
-
 if __name__ == '__main__':
     table = Table(xls=fixtures.xls)
-
+    print table
