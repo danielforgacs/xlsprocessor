@@ -19,7 +19,8 @@ class Sheet(object):
     def row_selector(self, cellrow):
         return cellrow
     def __str__(self):
-        return ''.join(['\n\trow: '+str(row.idx)+' '+str(row) for row in self.rows])
+        return ''.join(['\n\trow: '+str(row.idx)+' '+str(bool(row))
+            +' '+str(row) for row in self.rows])
 
 class CellRow(object):
     def __init__(self, row, idx):
