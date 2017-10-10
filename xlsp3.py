@@ -19,7 +19,7 @@ class Sheet(object):
     def row_selector(self, cellrow):
         return cellrow
     def __str__(self):
-        return ''.join(['\n\trow: '+str(row.idx)+str(row) for row in self.rows])
+        return ''.join(['\n\trow: '+str(row.idx)+' '+str(row) for row in self.rows])
 
 class CellRow(object):
     def __init__(self, row, idx):
@@ -54,8 +54,9 @@ class Cell(object):
     def __init__(self, value, idx):
         self.value = value
         self.idx = idx
-    # def __str__(self):
-    #     return '<{}. {}>'.format(self.value, bool(self))
+    def __str__(self):
+        return '<{:<1} {:<7} {:<5} {:<10}>'.format(
+            str(self.idx), self.value, str(bool(self)), self.__class__.__name__)
 
 class Empty(Cell):
     pass
