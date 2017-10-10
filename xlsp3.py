@@ -18,12 +18,13 @@ class Sheet(object):
 class Row(object):
     def __init__(self, row):
         # self.cells = tuple(Cell(cell) for cell in row)
-        self.cells = tuple(self.cell_selector(cell)
-                            for cell in row)
+        self.cells = tuple(self.cell_selector(cell, idx)
+                        for idx, cell in enumerate(row))
         print self
     def __str__(self):
-        return ', '.join([str(cell) for cell in self.cells])
-    def cell_selector(self, value):
+        cells = ', '.join([str(cell) for cell in self.cells])
+        return '<{}: {}>'.format(bool(self), cells)
+    def cell_selector(self, value, idx):
         if not value:
             cellclass = Empty
         elif value == NAMELABEL:
@@ -32,19 +33,22 @@ class Row(object):
             cellclass = CodeLabel
         elif value in AREAS:
             cellclass = AreaCell
-        return cellclass(value=value)
+        return cellclass(value=value, idx=idx)
 
 class Cell(object):
-    def __init__(self, value):
+    def __init__(self, value, idx):
         self.value = value
+        self.idx = idx
     def __str__(self):
-        return str(self.value)
+        return '<{}. {}>'.format(
+            self.value, bool(self))
 
 class Empty(Cell):
     pass
 
 class NameLabel(Cell):
-    pass
+    def __nonzer__(self):
+        return self.idx == 0
 
 class CodeLabel(Cell):
     pass
