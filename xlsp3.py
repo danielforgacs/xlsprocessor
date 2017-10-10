@@ -14,13 +14,14 @@ class Table(object):
 class Sheet(object):
     def __init__(self, sheet):
         self.rows = tuple(Row(row) for row in sheet)
+        print self
+    def __str__(self):
+        return '\n'.join([str(row) for row in self.rows])
 
 class Row(object):
     def __init__(self, row):
-        # self.cells = tuple(Cell(cell) for cell in row)
         self.cells = tuple(self.cell_selector(cell, idx)
                         for idx, cell in enumerate(row))
-        print self
     def __str__(self):
         cells = ', '.join([str(cell) for cell in self.cells])
         return '<{}: {}>'.format(bool(self), cells)
