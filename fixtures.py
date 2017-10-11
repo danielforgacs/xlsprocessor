@@ -16,8 +16,11 @@ xls = (
 
     (# sheet2
         ('name',    'code',     'area 1',   'area 2'), # NameArea
-        ('name',    'code',     'area 1',   'area 2'), # NameArea
+        ('area 1',    'code',     'area 1',   'area 2'), # NameArea
         ('name',    'code',     'area 1',   'area 2'), # NameArea
     )
 )
 
+# xls_test_pattern = {
+#     'sheet 0': {'valid': False, rows}
+# }
