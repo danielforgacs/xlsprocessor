@@ -17,11 +17,13 @@ class Sheet(object):
         cellrows = tuple(CellRow(row, idx) for idx, row in enumerate(sheet))
         self.rows = tuple(self.row_selector(cellrow=row) for row in cellrows)
     def row_selector(self, cellrow):
-        if all([isinstance(cell, Empty) for cell in cellrow]):
+        if all([isinstance(cell, EmptyCell) for cell in cellrow]):
             rowclass = EmptyRow
         elif not all(cellrow):
             rowclass = EmptyRow
-        elif isinstance(cellrow[0], NameLabel):
+        elif isinstance(cellrow[0], NameLabelCell):
+            rowclass = NameAreaRow
+        elif isinstance(cellrow[0], AreaCell):
             rowclass = NameAreaRow
         else:
             return cellrow
@@ -40,11 +42,11 @@ class CellRow(object):
                         for idx, cell in enumerate(row))
     def cell_selector(self, value, idx):
         if not value:
-            cellclass = Empty
+            cellclass = EmptyCell
         elif value == NAMELABEL:
-            cellclass = NameLabel
+            cellclass = NameLabelCell
         elif value == CODELABEL:
-            cellclass = CodeLabel
+            cellclass = CodeLabelCell
         elif value in AREAS:
             cellclass = AreaCell
         return cellclass(value=value, idx=idx)
@@ -66,12 +68,6 @@ class EmptyRow(Row):
     def __nonzero__(self):
         return False
 
-# ROWPATTERNS
-# ROWPATTERNS
-# ROWPATTERNS
-# ROWPATTERNS
-
-
 class AreaRow(Row):
     pass
 
@@ -87,14 +83,14 @@ class Cell(object):
             self.value, '.' if bool(self) else 'x',
             self.__class__.__name__)
 
-class Empty(Cell):
+class EmptyCell(Cell):
     pass
 
-class NameLabel(Cell):
+class NameLabelCell(Cell):
     def __nonzero__(self):
         return self.idx == 0
 
-class CodeLabel(Cell):
+class CodeLabelCell(Cell):
     def __nonzero__(self):
         return self.idx == 1
 
