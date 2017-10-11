@@ -84,7 +84,7 @@ class Cell(object):
         self.idx = idx
     def __str__(self):
         return '<{:<7} {:<2} {:<10}>'.format(
-            self.value, 'ok' if bool(self) else '.',
+            self.value, '.' if bool(self) else 'x',
             self.__class__.__name__)
 
 class Empty(Cell):
