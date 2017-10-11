@@ -20,7 +20,3 @@ xls = (
         ('name',    'code',     'area 1',   'area 2'), # NameArea
     )
 )
-
-# xls_test_pattern = {
-#     'sheet 0': {'valid': False, rows}
-# }
