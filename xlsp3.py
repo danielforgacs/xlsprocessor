@@ -38,7 +38,7 @@ class Sheet(object):
 class CellRow(object):
     def __init__(self, row, idx):
         self.idx = idx
-        self.cells = tuple(self.cell_selector(cell, idx)
+        self.cells = tuple(self.cell_selector(cell[0], idx)
                         for idx, cell in enumerate(row))
     def cell_selector(self, value, idx):
         if not value:
