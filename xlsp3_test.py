@@ -18,6 +18,7 @@ def test_rows():
     for k, sheet in enumerate(table.sheets):
         for i, row in enumerate(sheet.rows):
             is_rowvalid = fixtures.xls_rowclasses[i]
+            print i
             assert bool(row) == is_rowvalid
 
 

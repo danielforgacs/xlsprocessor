@@ -41,7 +41,7 @@ class Sheet(object):
         elif isinstance(cellrow[0], NameLabelCell):
             rowclass = NameAreaRow
         elif isinstance(cellrow[0], AreaCell):
-            rowclass = NameAreaRow
+            rowclass = AreaRow
         else:
             return cellrow
         return rowclass(cellrow.cells, cellrow.idx)
@@ -92,9 +92,6 @@ class AreaRow(Row):
 
 class NameAreaRow(Row):
     def __nonzero__(self):
-        if not all(self.cells):
-            return False
-
         cellclasses = ('NameLabelCell', 'CodeLabelCell',)
         cellclasses = cellclasses + tuple(['AreaCell' for k in self.cells[2:]])
         matches = []
