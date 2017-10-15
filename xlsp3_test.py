@@ -8,8 +8,8 @@ def test_01():
     for k, sheet in enumerate(table.sheets):
         for i, row in enumerate(sheet.rows):
             for j, cell in enumerate(row.cells):
-                celltypename = fixtures.xls[k][i][j][1]
-                is_cellvalid = fixtures.xls[k][i][j][2]
+                celltypename = fixtures.xls_cellclasses[k][i][j]
+                is_cellvalid = fixtures.xls_celltruth[k][i][j]
                 assert type(cell).__name__ == celltypename
                 assert bool(cell) == is_cellvalid
 

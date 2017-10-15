@@ -1,3 +1,20 @@
+# cell classes:
+# - empty
+# - name label
+# - name
+# - code label
+# - code
+# - area
+# - colour
+#
+# row classes:
+# - empty
+# - named area
+# - area
+# - named colour
+# - colour
+
+
 import fixtures
 from pprint import pprint
 
@@ -38,7 +55,7 @@ class Sheet(object):
 class CellRow(object):
     def __init__(self, row, idx):
         self.idx = idx
-        self.cells = tuple(self.cell_selector(cell[0], idx)
+        self.cells = tuple(self.cell_selector(cell, idx)
                         for idx, cell in enumerate(row))
     def cell_selector(self, value, idx):
         if not value:
