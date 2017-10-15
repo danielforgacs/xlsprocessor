@@ -5,18 +5,17 @@ xls = (
     (None,              'name',             None,               None),
     (None,              None,               'name',             None),
     ('name',            None,               'name',             None),
-    ('name',            'code',             'area 1',           'area 2'),
-    ('area 1',          'area 2',           'area 3',           'area 4'),
+    ('name',            'code',             'area 1',           'area 2'), # OK
+    ('area 1',          'area 2',           'area 3',           'area 4'), # OK
+    ('area 1',          'area 2',           None,               'area 4'),
+    ('name',            None,               'area 1',           'area 2'),
+    ('name',            'code',             None,               'area 2'),
+    ('name',            'code',             'khkjh',            'area 2'),
 ),
 )
 
 xls_cellclasses = (
 (
-    # ('EmptyCell',       'EmptyCell',        'EmptyCell',        'EmptyCell'),
-    # ('NameLabelCell',   'EmptyCell',        'EmptyCell',        'EmptyCell'),
-    # ('EmptyCell',       'NameLabelCell',    'EmptyCell',        'EmptyCell'),
-    # ('EmptyCell',       'EmptyCell',        'NameLabelCell',    'EmptyCell'),
-    # ('NameLabelCell',   'EmptyCell',        'NameLabelCell',    'EmptyCell'),
     ('NameLabelCell',   'CodeLabelCell',    'AreaCell',         'AreaCell'),
     ('AreaCell',        'AreaCell',         'AreaCell',         'AreaCell'),
 ),
@@ -24,11 +23,6 @@ xls_cellclasses = (
 
 xls_celltruth = (
 (
-    # (True,              True,               True,               True),
-    # (True,              True,               True,               True),
-    # (True,              False,              True,               True),
-    # (True,              True,               False,              True),
-    # (True,              True,               False,              True),
     (True,              True,               True,               True),
     (True,              True,               True,               True),
 ),
