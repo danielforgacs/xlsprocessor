@@ -86,10 +86,22 @@ class EmptyRow(Row):
         return False
 
 class AreaRow(Row):
-    pass
+    def __nonzero__(self):
+        is_areacell = lambda x: isinstance(x, AreaCell)
+        return all(map(is_areacell, self.cells))
 
 class NameAreaRow(Row):
-    pass
+    def __nonzero__(self):
+        if not all(self.cells):
+            return False
+
+        cellclasses = ('NameLabelCell', 'CodeLabelCell',)
+        cellclasses = cellclasses + tuple(['AreaCell' for k in self.cells[2:]])
+        matches = []
+        for cell, cellclass in zip(self.cells, cellclasses):
+            matches.append(type(cell).__name__ == cellclass)
+        return all(matches)
+
 
 class Cell(object):
     def __init__(self, value, idx):
