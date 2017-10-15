@@ -5,6 +5,7 @@ xls = (
     (None,              'name',             None,               None),
     (None,              None,               'name',             None),
     ('name',            None,               'name',             None),
+    ('name',            'code',             'area 1',           'area 2'),
 ),
 )
 
@@ -15,6 +16,7 @@ xls_cellclasses = (
     ('EmptyCell',       'NameLabelCell',    'EmptyCell',        'EmptyCell'),
     ('EmptyCell',       'EmptyCell',        'NameLabelCell',    'EmptyCell'),
     ('NameLabelCell',   'EmptyCell',        'NameLabelCell',    'EmptyCell'),
+    ('NameLabelCell',   'CodeLabelCell',    'AreaCell',         'AreaCell'),
 ),
 )
 
@@ -25,5 +27,15 @@ xls_celltruth = (
     (True,              False,              True,               True),
     (True,              True,               False,              True),
     (True,              True,               False,              True),
+    (True,              True,               True,               True),
 ),
+)
+
+xls_rowclasses = (
+    False,
+    False,
+    False,
+    False,
+    False,
+    True,
 )

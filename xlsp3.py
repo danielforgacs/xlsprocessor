@@ -1,8 +1,8 @@
 # cell classes:
 # - empty
 # - name label
-# - name
 # - code label
+# - name
 # - code
 # - area
 # - colour
@@ -10,8 +10,8 @@
 # row classes:
 # - empty
 # - named area
-# - area
 # - named colour
+# - area
 # - colour
 
 
