@@ -17,9 +17,7 @@ def test_rows():
     table = xlsp3.Table(xls=fixtures.xls)
     for k, sheet in enumerate(table.sheets):
         for i, row in enumerate(sheet.rows):
-            is_rowvalid = fixtures.xls_rowclasses[i]
-            print i
-            assert bool(row) == is_rowvalid
+            assert row.idx == fixtures.xls_ok_rowindexes[k][i]
 
 
 if __name__ == '__main__':

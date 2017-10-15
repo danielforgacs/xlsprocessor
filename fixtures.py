@@ -12,11 +12,11 @@ xls = (
 
 xls_cellclasses = (
 (
-    ('EmptyCell',       'EmptyCell',        'EmptyCell',        'EmptyCell'),
-    ('NameLabelCell',   'EmptyCell',        'EmptyCell',        'EmptyCell'),
-    ('EmptyCell',       'NameLabelCell',    'EmptyCell',        'EmptyCell'),
-    ('EmptyCell',       'EmptyCell',        'NameLabelCell',    'EmptyCell'),
-    ('NameLabelCell',   'EmptyCell',        'NameLabelCell',    'EmptyCell'),
+    # ('EmptyCell',       'EmptyCell',        'EmptyCell',        'EmptyCell'),
+    # ('NameLabelCell',   'EmptyCell',        'EmptyCell',        'EmptyCell'),
+    # ('EmptyCell',       'NameLabelCell',    'EmptyCell',        'EmptyCell'),
+    # ('EmptyCell',       'EmptyCell',        'NameLabelCell',    'EmptyCell'),
+    # ('NameLabelCell',   'EmptyCell',        'NameLabelCell',    'EmptyCell'),
     ('NameLabelCell',   'CodeLabelCell',    'AreaCell',         'AreaCell'),
     ('AreaCell',        'AreaCell',         'AreaCell',         'AreaCell'),
 ),
@@ -24,22 +24,16 @@ xls_cellclasses = (
 
 xls_celltruth = (
 (
-    (True,              True,               True,               True),
-    (True,              True,               True,               True),
-    (True,              False,              True,               True),
-    (True,              True,               False,              True),
-    (True,              True,               False,              True),
+    # (True,              True,               True,               True),
+    # (True,              True,               True,               True),
+    # (True,              False,              True,               True),
+    # (True,              True,               False,              True),
+    # (True,              True,               False,              True),
     (True,              True,               True,               True),
     (True,              True,               True,               True),
 ),
 )
 
-xls_rowclasses = (
-    False,
-    False,
-    False,
-    False,
-    False,
-    True,
-    True,
+xls_ok_rowindexes = (
+    (5, 6,),
 )

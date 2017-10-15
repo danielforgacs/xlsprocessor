@@ -32,7 +32,8 @@ class Table(object):
 class Sheet(object):
     def __init__(self, sheet):
         cellrows = tuple(CellRow(row, idx) for idx, row in enumerate(sheet))
-        self.rows = tuple(self.row_selector(cellrow=row) for row in cellrows)
+        classedrows = tuple(self.row_selector(cellrow=cellrow) for cellrow in cellrows)
+        self.rows = tuple([row for row in classedrows if bool(row)])
     def row_selector(self, cellrow):
         if all([isinstance(cell, EmptyCell) for cell in cellrow]):
             rowclass = EmptyRow
@@ -49,8 +50,6 @@ class Sheet(object):
         return ''.join(['\n\t{:<2} {:<6} {:<11} {}'.format(
             str(row.idx), str(bool(row)), str(type(row).__name__),
             str(row)) for row in self.rows])
-        return ''.join(['\n\trow: '+str(row.idx)+' '+str(bool(row))+' '+str(type(row).__name__)
-            +' '+str(row) for row in self.rows])
 
 class CellRow(object):
     def __init__(self, row, idx):
@@ -105,7 +104,7 @@ class Cell(object):
         self.value = value
         self.idx = idx
     def __str__(self):
-        return '<{:<7} {:<2} {:<10}>'.format(
+        return '<{:<7} {:<2} {:<15}>'.format(
             self.value, '.' if bool(self) else 'x',
             self.__class__.__name__)
 
