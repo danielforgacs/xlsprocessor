@@ -13,11 +13,17 @@ def test_cells():
                 assert type(cell).__name__ == celltypename
                 assert bool(cell) == is_cellvalid
 
-def test_rows():
+def test_rows_01():
     table = xlsp.Table(xls=fixtures.xls)
     for k, sheet in enumerate(table.sheets):
         for i, row in enumerate(sheet.rows):
             assert row.idx == fixtures.xls_ok_rowindexes[k][i]
+
+def test_rows_02():
+    table = xlsp.Table(xls=fixtures.xls)
+    for k, sheet in enumerate(table.sheets):
+        for i, row in enumerate(sheet.rows):
+            assert type(row).__name__ == fixtures.xls_rowclasses[k][i]
 
 
 if __name__ == '__main__':

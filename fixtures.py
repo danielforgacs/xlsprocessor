@@ -28,6 +28,10 @@ xls_celltruth = (
 ),
 )
 
+xls_rowclasses = (
+    ('NameAreaRow', 'AreaRow'),
+)
+
 xls_ok_rowindexes = (
     (5, 6,),
 )
