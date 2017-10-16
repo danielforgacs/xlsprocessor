@@ -44,7 +44,7 @@ class Sheet(object):
         elif isinstance(cellrow[0], AreaCell):
             rowclass = AreaRow
         else:
-            return cellrow
+            rowclass = cellrow
         return rowclass(cellrow.cells, cellrow.idx)
     def __str__(self):
         return ''.join(['\n\t{:<2} {:<6} {:<11} {}'.format(
