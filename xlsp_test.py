@@ -1,10 +1,10 @@
-import xlsp3
+import xlsp
 import fixtures
 import pytest
 
 
 def test_cells():
-    table = xlsp3.Table(xls=fixtures.xls)
+    table = xlsp.Table(xls=fixtures.xls)
     for k, sheet in enumerate(table.sheets):
         for i, row in enumerate(sheet.rows):
             for j, cell in enumerate(row.cells):
@@ -14,7 +14,7 @@ def test_cells():
                 assert bool(cell) == is_cellvalid
 
 def test_rows():
-    table = xlsp3.Table(xls=fixtures.xls)
+    table = xlsp.Table(xls=fixtures.xls)
     for k, sheet in enumerate(table.sheets):
         for i, row in enumerate(sheet.rows):
             assert row.idx == fixtures.xls_ok_rowindexes[k][i]
