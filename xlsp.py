@@ -51,9 +51,12 @@ class Sheet(object):
             str(row.idx), str(bool(row)), str(type(row).__name__),
             str(row)) for row in self.rows])
     def __nonzero__(self):
-        template = ['AreaRow'] + ['Row' for k in self.rows[1:]]
-        namedtemplate = ['NameAreaRow', ]
-        return True
+        if type(self.rows[0]).__name__ not in ('AreaRow', 'NameAreaRow'):
+            return False
+        elif all(map(lambda x: isinstance(x, 'Row'), self.rows[1:])):
+            return True
+        else:
+            return False
 
 class CellRow(object):
     def __init__(self, row, idx):
