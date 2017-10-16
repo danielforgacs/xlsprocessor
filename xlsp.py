@@ -50,6 +50,10 @@ class Sheet(object):
         return ''.join(['\n\t{:<2} {:<6} {:<11} {}'.format(
             str(row.idx), str(bool(row)), str(type(row).__name__),
             str(row)) for row in self.rows])
+    def __nonzero__(self):
+        template = ['AreaRow'] + ['Row' for k in self.rows[1:]]
+        namedtemplate = ['NameAreaRow', ]
+        return True
 
 class CellRow(object):
     def __init__(self, row, idx):
