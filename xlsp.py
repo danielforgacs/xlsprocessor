@@ -33,8 +33,7 @@ class Sheet(object):
     def __init__(self, sheet):
         cellrows = tuple(CellRow(row, idx) for idx, row in enumerate(sheet))
         classedrows = tuple(self.row_selector(cellrow=cellrow) for cellrow in cellrows)
-        self.rows = tuple([row for row in classedrows])
-        self.rows = tuple([row for row in self.rows if bool(row)])
+        self.rows = tuple([row for row in classedrows if bool(row)])
     def row_selector(self, cellrow):
         if all([isinstance(cell, EmptyCell) for cell in cellrow]):
             rowclass = EmptyRow
