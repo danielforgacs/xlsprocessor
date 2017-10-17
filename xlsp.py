@@ -25,7 +25,8 @@ AREAS = ['area '+str(k) for k in range(5)]
 
 class Table(object):
     def __init__(self, xls):
-        self.sheets = tuple(Sheet(sheet) for sheet in xls)
+        rawsheets = tuple(Sheet(sheet) for sheet in xls)
+        self.sheets = tuple([sheet for sheet in rawsheets if bool(sheet)])
     def __str__(self):
         return '\n'.join(['sheet:'+str(sheet) for sheet in self.sheets])
 
