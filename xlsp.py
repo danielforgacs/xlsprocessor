@@ -96,7 +96,11 @@ class EmptyRow(Row):
 class AreaRow(Row):
     def __nonzero__(self):
         is_areacell = lambda x: isinstance(x, AreaCell)
-        return all(map(is_areacell, self.cells))
+        values = [cell.value for cell in self.cells]
+        if len(values) != len(set(values)):
+            return False
+        else:
+            return all(map(is_areacell, self.cells))
 
 class NameAreaRow(Row):
     def __nonzero__(self):
