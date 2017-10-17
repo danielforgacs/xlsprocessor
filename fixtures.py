@@ -25,6 +25,10 @@ xls = (
         ('name',            'code',             None,               'area 2'),
         ('name',            'code',             'khkjh',            'area 2'),
     ),
+    (
+        (None,      None,       None,       None,       None,       None),
+        ('area 1',  'area 1',   'area 1',   'area 1',   'area 1',   'area 1'),
+    ),
 )
 
 xls_cellclasses = (
