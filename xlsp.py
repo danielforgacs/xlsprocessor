@@ -36,15 +36,16 @@ class Sheet(object):
         classedrows = tuple(self.row_selector(cellrow=cellrow) for cellrow in cellrows)
         self.rows = tuple([row for row in classedrows if bool(row)])
     def row_selector(self, cellrow):
-        if all([isinstance(cell, EmptyCell) for cell in cellrow]):
+        if not all(cellrow):
             rowclass = EmptyRow
-        elif not all(cellrow):
+        elif all([isinstance(cell, EmptyCell) for cell in cellrow]):
             rowclass = EmptyRow
         elif isinstance(cellrow[0], NameLabelCell):
             rowclass = NameAreaRow
         elif isinstance(cellrow[0], AreaCell):
             rowclass = AreaRow
         else:
+            print cellrow
             rowclass = cellrow
         return rowclass(cellrow.cells, cellrow.idx)
     def __str__(self):
@@ -52,12 +53,17 @@ class Sheet(object):
             str(row.idx), str(bool(row)), str(type(row).__name__),
             str(row)) for row in self.rows])
     def __nonzero__(self):
-        if type(self.rows[0]).__name__ not in ('AreaRow', 'NameAreaRow'):
-            return False
-        elif all(map(lambda x: isinstance(x, 'Row'), self.rows[1:])):
-            return True
-        else:
-            return False
+        return True
+        # template = [AreaRow] + [Row for k in self.rows[1:]]
+        # nametemplate = [NameAreaRow] + [Row
+        #  for k in self.rows[1:]]
+        # isinsta = lambda x: isinstance(x[0], x[1])
+        # if all(map(isinsta, zip(self.rows, template))):
+        #     return True
+        # if all(map(isinsta, zip(self.rows, nametemplate))):
+        #     return True
+        # else:
+        #     return False
 
 class CellRow(object):
     def __init__(self, row, idx):
